@@ -5,7 +5,7 @@
 - Легкость поддержки кода;
 - Масштабируемость;
 - Код легко читать;
-- Легкость переиспользования;
+- Легкость переиспользования (reusability);
 
 ## SRP - Single Responsibility Principle (Принцип единственной ответственности)
 Определение: Класс должен содержать только те поля и методы, которые относятся к одной задаче (вопросу).
@@ -114,7 +114,7 @@ class CodeChild2 implements Code {
 
 > Смотреть пример bin/OCP - Open-Closed Principle/example.dart
 
-## LSP - Liskov Substitution Principle
+## LSP - Liskov Substitution Principle (Принцип подстановки Барбары Лисков)
 
 Определение: Поведение наследующих классов не должно противоречить поведению заданного в базовом классе.
 
@@ -181,3 +181,39 @@ class ClientAdmin extends ClientUser implements IClientAdmin {
 
 Интерфейсы являются принадлежностью клиента.
 
+## DIP - Dependency Inversion Principle (Принцип инверсии зависимостей)
+
+Определение: Модули верхних уровней не доолжны зависеть от модулей нижних уровней. Оба типа модулей должны зависеть от интерфейса.
+
+Определение: Абстракции не должны зависеть от деталей. Детали должны зависеть от абстракций.
+
+Зависимость на Абстракциях. Нет зависимости на что-то конкретное.
+
+__Использовать все классы через интерфейсы__
+
+```dart
+abstract class Payment {
+    void payment();
+}
+
+class PaymentCreditCard implements Payment {
+    @override
+    void payment(){
+        // Логика
+    }
+}
+
+class PaymentDebitCard implements Payment {
+    @override
+    void payment(){
+        // Логика
+    }
+}
+
+class CheckOut {
+    // Класс CheckOut не знает как работает Payment, ему достаточно знать что есть методо payment
+    void checkOut(Payment pay){
+        pay.payment();
+    }
+}
+```
