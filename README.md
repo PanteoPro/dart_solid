@@ -70,43 +70,52 @@ class Temp {
 ### Пример
 
 ```dart
-abstract class Code {
-    int method1();
-    int method2();
+class Image {
+  final int width;
+  final int height;
+  final ISave _saver;
+  Image(this.width, this.height, this._saver);
+
+  void saveTo(String path) {
+    _saver.save(path, this);
+  }
 }
 
-/// Первая реализация интерфейса
-class CodeChild1 implements Code {
-    @override
-    int method1() {
-        // Реализация
-    }
-
-    @override
-    int method2() {
-        // Реализация
-    }
+abstract class ISave {
+  void save(String path, Image image);
 }
 
-/// Реализация интерфейса с новыми функциями
-/// Может наследоваться от CodeChild1, либо частично делигировать функционал в CodeChild1
-/// class CodeChild2 extends CodeChild1
-class CodeChild2 implements Code {
-    @override
-    int method1() {
-        // Реализация
-        // Может делигировать выполнение предыдущей реализации CodeChild1.method1()
-    }
+class SaveToBMP implements ISave {
+  @override
+  void save(String path, Image image) {
+    print('save image: ${image.width}, ${image.height} to bmp');
+  }
+}
 
-    @override
-    int method2() {
-        // Реализация
-        // Может делигировать выполнение предыдущей реализации CodeChild1.method2()
-    }
+class SaveToJPG implements ISave {
+  @override
+  void save(String path, Image image) {
+    print('save image: ${image.width}, ${image.height} to jpg');
+  }
+}
 
-    int method3(){
-        // Новый функционал
-    }
+class SaveToPNG implements ISave {
+  @override
+  void save(String path, Image image) {
+    print('save image: ${image.width}, ${image.height} to png');
+  }
+}
+
+void usageOCPExample() {
+  final images = <Image>[
+    Image(10, 20, SaveToBMP()),
+    Image(30, 40, SaveToJPG()),
+    Image(100, 70, SaveToPNG()),
+  ];
+
+  for (final img in images) {
+    img.saveTo('filename');
+  }
 }
 ```
 

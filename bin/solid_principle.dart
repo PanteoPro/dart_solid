@@ -16,13 +16,13 @@ Future<void> usageSRPExample() async {
 
 void usageOCPExample() {
   print('OCP Example');
-  final figures = [Square(3), Square(6), Square(8), Cube(12)];
+  final images = <Image>[
+    Image(10, 20, SaveToBMP()),
+    Image(30, 40, SaveToJPG()),
+    Image(100, 70, SaveToPNG()),
+  ];
 
-  for (final figure in figures) {
-    figure.info();
-    print('square = ${figure.getSquare()}');
-    if (figure is Cube) {
-      print('volume = ${figure.volume()}');
-    }
+  for (final img in images) {
+    img.saveTo('filename');
   }
 }

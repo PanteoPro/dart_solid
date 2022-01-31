@@ -1,39 +1,35 @@
-abstract class Figure {
-  double getSquare();
-  void info();
-}
+class Image {
+  final int width;
+  final int height;
+  final ISave _saver;
+  Image(this.width, this.height, this._saver);
 
-class Square implements Figure {
-  const Square(this.a);
-  final int a;
-
-  @override
-  double getSquare() {
-    return (a * a).toDouble();
-  }
-
-  @override
-  void info() {
-    print('Square(a: $a)');
+  void saveTo(String path) {
+    _saver.save(path, this);
   }
 }
 
-class Cube implements Figure {
-  const Cube(this.a);
-  final int a;
+abstract class ISave {
+  void save(String path, Image image);
+}
 
+class SaveToBMP implements ISave {
   @override
-  double getSquare() {
-    return a * a * 6;
+  void save(String path, Image image) {
+    print('save image: ${image.width}, ${image.height} to bmp');
   }
+}
 
+class SaveToJPG implements ISave {
   @override
-  void info() {
-    print('Cube(a: $a)');
+  void save(String path, Image image) {
+    print('save image: ${image.width}, ${image.height} to jpg');
   }
+}
 
-  // Новый функционал
-  double volume() {
-    return (a * a * a).toDouble();
+class SaveToPNG implements ISave {
+  @override
+  void save(String path, Image image) {
+    print('save image: ${image.width}, ${image.height} to png');
   }
 }
